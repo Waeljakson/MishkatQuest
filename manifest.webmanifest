@@ -1,0 +1,31 @@
+{
+  "name": "Mishkat Quest | رحلة المشكاة لإتقان القدرات",
+  "short_name": "Mishkat Quest",
+  "description": "منصة تعليمية تفاعلية لإتقان القدرات اللفظية بأسلوب المغامرات والتدريب الذكي.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#031a15",
+  "theme_color": "#063529",
+  "categories": [
+    "education",
+    "games"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

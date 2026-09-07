@@ -1,0 +1,19 @@
+Mishkat Quest v1.5 — PWA Launch
+
+تشغيل محلي سريع:
+- افتح index.html مباشرة للتجربة العادية.
+- خصائص PWA (التثبيت وService Worker) لا تعمل من file://.
+
+للتثبيت كتطبيق:
+1) ارفع محتويات هذا المجلد كما هي إلى استضافة HTTPS مثل GitHub Pages / Netlify / Vercel.
+2) افتح الرابط من Chrome/Edge ثم اختر تثبيت التطبيق.
+3) على iPhone/iPad: Safari > مشاركة > إضافة إلى الشاشة الرئيسية.
+
+الملفات:
+- index.html: التطبيق
+- manifest.webmanifest: تعريف PWA
+- sw.js: تخزين Shell التطبيق للعمل عند انقطاع الشبكة
+- icons/: أيقونات التطبيق
+- 404.html و _redirects: جاهزية الاستضافة الثابتة
+
+ملاحظة: البيانات الحية وتسجيل الدخول وSupabase تحتاج اتصالاً بالإنترنت.
