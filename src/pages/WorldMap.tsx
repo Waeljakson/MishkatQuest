@@ -1,0 +1,8 @@
+import { BookOpenText, Castle, Gem, Languages, Lock, Mountain, Trees, ScrollText } from 'lucide-react'
+import TopBar from '../components/TopBar'; import BottomNav from '../components/BottomNav'; import { useNavigate } from 'react-router-dom'; import { useEffect, useState } from 'react'; import { supabase } from '../lib/supabase'
+const icons:any={words:Languages,relations:Mountain,sentences:Castle,context:Trees,odd:Gem,reading:BookOpenText,final:ScrollText}
+export default function WorldMap(){
+  const nav=useNavigate(); const [worlds,setWorlds]=useState<any[]>([])
+  useEffect(()=>{if(!supabase)return;supabase.from('worlds').select('id,code,title_ar,sort_order,missions(code,title_ar,sort_order)').order('sort_order').then(({data})=>setWorlds(data||[]))},[])
+  return <main className="page app-page map-page"><TopBar/><section className="content"><div className="map-heading"><span className="eyebrow">سبعة عوالم • نحو الإتقان</span><h1>خريطة الرحلة</h1></div><div className="world-path">{worlds.map((w:any,i:number)=>{const I=icons[w.code]||Gem;const mission=(w.missions||[]).sort((a:any,b:any)=>a.sort_order-b.sort_order)[0];const locked=!mission;return <article key={w.id} onClick={()=>mission&&nav('/mission/'+mission.code)} className={`world-node ${locked?'locked':i===0?'active':'open'}`}><div className="world-icon"><I/></div><div><b>{w.title_ar}</b><span>{mission?mission.title_ar:'قريبًا'}</span></div>{locked?<Lock size={20}/>:<span className="world-number">{i+1}</span>}</article>})}</div><div className="boss-lock"><Castle/><h2>قلعة القدرات</h2><p>أكمل جميع العوالم لفتح المواجهة النهائية.</p></div></section><BottomNav/></main>
+}
