@@ -375,7 +375,46 @@ html,body,button,input,select,textarea{font-family:'Cairo',Tahoma,sans-serif!imp
 }
 
 
-/* v1.9.2 — حقوق التصميم والبرمجة */
+
+/* v1.9.3 — شاشة انتصار مواجهة الحارس */
+.guardian-victory-overlay{display:none;position:fixed;inset:0;z-index:125;place-items:center;padding:20px;overflow:auto;background:
+radial-gradient(circle at 50% 18%,rgba(255,210,93,.18),transparent 26%),
+linear-gradient(145deg,rgba(39,20,8,.97),rgba(3,35,27,.98) 58%,rgba(2,20,16,.99));backdrop-filter:blur(12px);font-family:'Cairo',sans-serif}
+.guardian-victory-overlay.show{display:grid}
+.guardian-victory-overlay:before,.guardian-victory-overlay:after{content:'';position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none}
+.guardian-victory-overlay:before{width:360px;height:360px;right:-90px;top:-90px;background:rgba(243,200,90,.13)}
+.guardian-victory-overlay:after{width:420px;height:420px;left:-130px;bottom:-150px;background:rgba(34,177,126,.12)}
+.guardian-victory-card{position:relative;width:min(760px,100%);overflow:hidden;text-align:center;border:1px solid rgba(255,224,139,.55);border-radius:34px;padding:30px 28px 26px;color:#fff8df;background:
+linear-gradient(180deg,rgba(86,48,18,.96),rgba(41,25,12,.97) 44%,rgba(6,45,34,.98));box-shadow:0 34px 110px rgba(0,0,0,.65),inset 0 1px rgba(255,255,255,.13)}
+.guardian-victory-card:before{content:'';position:absolute;inset:0;background:
+radial-gradient(circle at 50% -8%,rgba(255,226,132,.34),transparent 31%),
+linear-gradient(110deg,transparent 22%,rgba(255,255,255,.05) 45%,transparent 68%);pointer-events:none}
+.guardian-victory-card>*{position:relative;z-index:2}
+.gv-kicker{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid rgba(255,221,118,.33);background:rgba(255,220,105,.09);color:#ffe08b;font-size:12px;font-weight:900}
+.gv-emblem{width:132px;height:132px;margin:15px auto 5px;border-radius:50%;display:grid;place-items:center;position:relative;background:
+radial-gradient(circle,#ffe8a1 0,#d8a53b 50%,#684015 72%,#171109 73%);box-shadow:0 0 0 7px rgba(246,202,89,.09),0 18px 38px rgba(0,0,0,.38)}
+.gv-castle{font-size:66px;line-height:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.32))}
+.gv-crown{position:absolute;top:-20px;right:40px;font-size:34px;transform:rotate(7deg);filter:drop-shadow(0 5px 7px rgba(0,0,0,.32))}
+.guardian-victory-card h1{margin:8px 0 2px;font-size:clamp(34px,6vw,54px);line-height:1.15;color:#ffe38a;text-shadow:0 4px 18px rgba(0,0,0,.35)}
+.gv-subtitle{margin:8px auto 16px;max-width:600px;color:#f6ead3;font-size:15px;line-height:1.9}
+.gv-score{width:142px;height:142px;margin:8px auto 18px;border-radius:50%;display:grid;place-content:center;background:rgba(255,248,221,.08);border:2px solid rgba(255,224,139,.35);box-shadow:inset 0 0 0 8px rgba(255,255,255,.025)}
+.gv-score b{font-size:34px;color:#ffe38a;line-height:1}.gv-score span{margin-top:7px;font-size:11px;color:#d6c7aa}
+.gv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:0 auto 14px}
+.gv-stat{padding:11px 8px;border-radius:17px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09)}
+.gv-stat b{display:block;font-size:18px;color:#fff1bc}.gv-stat span{display:block;margin-top:3px;font-size:10px;color:#cbbfa8}
+.gv-unlocked{display:flex;align-items:center;gap:12px;text-align:right;padding:14px 15px;margin:13px 0;border-radius:18px;background:linear-gradient(90deg,rgba(34,177,126,.16),rgba(243,200,90,.10));border:1px solid rgba(74,222,155,.22)}
+.gv-unlocked>span{font-size:31px}.gv-unlocked b{display:block;color:#c8ffe7}.gv-unlocked small{display:block;color:#d7d0c1;line-height:1.7;margin-top:2px}
+.gv-chest{display:none;margin:11px 0;padding:10px 13px;border-radius:15px;background:rgba(255,226,139,.12);border:1px solid rgba(255,226,139,.25);color:#ffe49a;font-weight:900;font-size:12px}
+.gv-chest.show{display:block}
+.gv-actions{display:grid;grid-template-columns:1.35fr .9fr;gap:10px;margin-top:15px}.gv-actions button{min-height:48px}
+.gv-particles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.gv-particles i{position:absolute;left:var(--x);top:-8%;width:8px;height:15px;border-radius:3px;background:var(--c);opacity:.9;animation:guardianConfetti var(--dur) linear var(--delay) infinite;transform:rotate(var(--rot))}
+@keyframes guardianVictoryIn{0%{opacity:0;transform:translateY(34px) scale(.93)}70%{transform:translateY(-5px) scale(1.01)}100%{opacity:1;transform:none}}
+@keyframes guardianConfetti{to{transform:translateY(118vh) rotate(760deg);opacity:.15}}
+.guardian-victory-overlay.show .guardian-victory-card{animation:guardianVictoryIn .62s cubic-bezier(.2,.9,.2,1) both}
+@media(max-width:620px){.guardian-victory-overlay{padding:12px}.guardian-victory-card{padding:24px 15px 18px;border-radius:27px}.gv-emblem{width:108px;height:108px}.gv-castle{font-size:53px}.gv-crown{right:31px}.gv-stats{grid-template-columns:repeat(2,1fr)}.gv-actions{grid-template-columns:1fr}.gv-subtitle{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.guardian-victory-overlay.show .guardian-victory-card,.gv-particles i{animation:none}}
+\n/* v1.9.2 — حقوق التصميم والبرمجة */
 .app-credit{width:min(1180px,calc(100% - 28px));margin:22px auto 92px;padding:12px 16px;text-align:center;border-top:1px solid rgba(255,255,255,.10);color:#a9c9bf;font-size:11px;line-height:1.8}
 .app-credit strong{display:block;color:#f7cd63;font-weight:900;font-size:12px;letter-spacing:.1px}
 .app-credit span{display:block;opacity:.92}
@@ -385,7 +424,30 @@ html,body,button,input,select,textarea{font-family:'Cairo',Tahoma,sans-serif!imp
 </style>
 </head><body>
 <div id="fatal" class="overlay"><h2>حدث خطأ</h2><p>لن تظهر صفحة بيضاء؛ سيظهر الخطأ هنا ليسهل إصلاحه.</p><pre id="fatalText"></pre><button class="goldbtn" onclick="location.reload()">إعادة تحميل</button></div>
-<div id="rewardOverlay" class="reward-overlay"><div id="rewardCard" class="reward-card"><div id="rewardIcon" class="reward-icon">🏆</div><h2 id="rewardTitle">أحسنت</h2><p id="rewardText"></p><div class="reward-stats"><div class="reward-stat" id="rewardXp">+0 XP</div><div class="reward-stat" id="rewardCoins">+0 🪙</div></div><div id="rewardChest" class="reward-chest-line hidden"></div><button class="primary wide" onclick="closeReward()">متابعة الرحلة</button></div></div><div id="playerOverlay" class="player-overlay" onclick="if(event.target===this)closePlayerProfile()"><div id="playerCard" class="player-card"></div></div><div id="toast" class="toast"></div>
+<div id="rewardOverlay" class="reward-overlay"><div id="rewardCard" class="reward-card"><div id="rewardIcon" class="reward-icon">🏆</div><h2 id="rewardTitle">أحسنت</h2><p id="rewardText"></p><div class="reward-stats"><div class="reward-stat" id="rewardXp">+0 XP</div><div class="reward-stat" id="rewardCoins">+0 🪙</div></div><div id="rewardChest" class="reward-chest-line hidden"></div><button class="primary wide" onclick="closeReward()">متابعة الرحلة</button></div></div>
+<div id="guardianVictoryOverlay" class="guardian-victory-overlay" aria-modal="true" role="dialog" aria-labelledby="guardianVictoryTitle">
+  <div id="guardianParticles" class="gv-particles" aria-hidden="true"></div>
+  <div class="guardian-victory-card">
+    <div class="gv-kicker">✦ الفصل الأخير اكتمل ✦</div>
+    <div class="gv-emblem"><span class="gv-crown">👑</span><span class="gv-castle">🏰</span></div>
+    <h1 id="guardianVictoryTitle">هزمت الحارس!</h1>
+    <p class="gv-subtitle">أحسنت. فتحت قلعة القدرات وأنهيت القصة الأساسية بنجاح. من هنا تبدأ مرحلة ما بعد القلعة والتحديات الأقوى.</p>
+    <div class="gv-score"><b id="guardianVictoryScore">0%</b><span>نتيجة المواجهة</span></div>
+    <div class="gv-stats">
+      <div class="gv-stat"><b id="guardianVictoryCorrect">—</b><span>إجابات صحيحة</span></div>
+      <div class="gv-stat"><b id="guardianVictoryXp">+0</b><span>XP مكافأة</span></div>
+      <div class="gv-stat"><b id="guardianVictoryCoins">+0</b><span>عملات</span></div>
+      <div class="gv-stat"><b>مكتملة</b><span>القصة الأساسية</span></div>
+    </div>
+    <div class="gv-unlocked"><span>🔓</span><div><b>تم فتح مرحلة ما بعد القلعة</b><small>المسار الذكي · زعيم نقطة الضعف · أحداث العالم · الدوري والمواجهات</small></div></div>
+    <div id="guardianVictoryChest" class="gv-chest">🎁 حصلت على صندوق ذهبي — افتحه من المتجر</div>
+    <div class="gv-actions">
+      <button class="goldbtn wide" onclick="closeGuardianVictory('adaptive')">ابدأ مرحلة ما بعد القلعة</button>
+      <button class="ghost wide" onclick="closeGuardianVictory('map')">عرض خريطة الرحلة</button>
+    </div>
+  </div>
+</div>
+<div id="playerOverlay" class="player-overlay" onclick="if(event.target===this)closePlayerProfile()"><div id="playerCard" class="player-card"></div></div><div id="toast" class="toast"></div>
 
 <div id="connectionBadge" class="connection-badge"><span class="connection-dot"></span><span id="connectionText">متصل</span></div>
 <div id="onboardingOverlay" class="onboarding-overlay" aria-modal="true" role="dialog">
@@ -901,7 +963,29 @@ async function failAttempt(reason){
   try{if(!demo&&attemptId)await api('rpc/abandon_mission_attempt',{method:'POST',body:JSON.stringify({p_attempt_id:attemptId,p_reason:reason})});if(!demo)await loadStudent();showReward({passed:false,score:Math.round(score/Math.max(1,currentQuestions.length)*100),reward_xp:0,reward_coins:0},reason,'💔',['adaptive','personal_boss'].includes(currentMission?.mission_kind)?'adaptive':currentMission?.mission_kind==='review'?'review':currentMission?.mission_kind==='world_event'?'events':'map')}catch(e){toast(e.message);show('map')}
 }
 async function leaveMission(){const target=['adaptive','personal_boss'].includes(currentMission?.mission_kind)?'adaptive':currentMission?.mission_kind==='review'?'review':currentMission?.mission_kind==='world_event'?'events':'map';if(!attemptId){show(target);return}if(!confirm('هل تريد مغادرة المهمة؟ ستُسجل المحاولة دون نجاح.'))return;await failAttempt('تم إنهاء المحاولة')}
-function showReward(r,title,icon,target='map'){pendingRewardTarget=target;const ov=document.getElementById('rewardOverlay'),card=document.getElementById('rewardCard');card.classList.toggle('fail',!r.passed);document.getElementById('rewardIcon').textContent=icon||'🏆';document.getElementById('rewardTitle').textContent=title||'نتيجة المهمة';document.getElementById('rewardText').innerHTML=(r.passed?`أتممت التحدي بنسبة ${Math.round(Number(r.score||0))}%`:`لم تكتمل المهمة. النتيجة الحالية ${Math.round(Number(r.score||0))}%`)+(r.power_before!=null&&r.power_after!=null?`<div class="boss-power-result"><div><b>${Number(r.power_before).toFixed(0)}</b><small>قوة المهارة قبل</small></div><span class="boss-arrow">←</span><div><b>${Number(r.power_after).toFixed(0)}</b><small>بعد المواجهة</small></div></div>`:'');document.getElementById('rewardXp').textContent=`+${Number(r.reward_xp||0)} XP`;document.getElementById('rewardCoins').textContent=`+${Number(r.reward_coins||0)} 🪙`;const rc=document.getElementById('rewardChest');if(r.chest_type){rc.classList.remove('hidden');rc.textContent=`🎁 حصلت على صندوق ${chestAr(r.chest_type)} — افتحه من المتجر`}else rc.classList.add('hidden');ov.classList.add('show')}
+
+function showGuardianVictory(r){
+  const ov=document.getElementById('guardianVictoryOverlay');if(!ov){showReward(r,'نتيجة مواجهة الحارس','🏆','map');return}
+  const pct=Math.round(Number(r?.score||0));
+  document.getElementById('guardianVictoryScore').textContent=pct+'%';
+  document.getElementById('guardianVictoryCorrect').textContent=(r?.correct!=null&&r?.total!=null)?(Number(r.correct)+' / '+Number(r.total)):'✓';
+  document.getElementById('guardianVictoryXp').textContent='+'+Number(r?.reward_xp||0);
+  document.getElementById('guardianVictoryCoins').textContent='+'+Number(r?.reward_coins||0);
+  const chest=document.getElementById('guardianVictoryChest');chest.classList.toggle('show',Boolean(r?.chest_type));
+  const colors=['#f3c85a','#fff1a8','#42d991','#d59b45','#ffffff'];
+  document.getElementById('guardianParticles').innerHTML=Array.from({length:34},(_,i)=>{
+    const x=(i*37)%101,d=(i%9)*-.21,dur=2.8+(i%7)*.22,rot=(i*53)%360,c=colors[i%colors.length];
+    return '<i style="--x:'+x+'%;--delay:'+d+'s;--dur:'+dur+'s;--rot:'+rot+'deg;--c:'+c+'"></i>'
+  }).join('');
+  ov.classList.add('show');
+  try{if(navigator.vibrate)navigator.vibrate([70,45,110,45,160])}catch(_){}
+}
+function closeGuardianVictory(target='adaptive'){
+  const ov=document.getElementById('guardianVictoryOverlay');if(ov)ov.classList.remove('show');
+  const p=document.getElementById('guardianParticles');if(p)p.innerHTML='';
+  show(target||'adaptive');
+}
+\nfunction showReward(r,title,icon,target='map'){if(currentMission?.mission_kind==='boss'&&r?.passed){showGuardianVictory(r);return}pendingRewardTarget=target;const ov=document.getElementById('rewardOverlay'),card=document.getElementById('rewardCard');card.classList.toggle('fail',!r.passed);document.getElementById('rewardIcon').textContent=icon||'🏆';document.getElementById('rewardTitle').textContent=title||'نتيجة المهمة';document.getElementById('rewardText').innerHTML=(r.passed?`أتممت التحدي بنسبة ${Math.round(Number(r.score||0))}%`:`لم تكتمل المهمة. النتيجة الحالية ${Math.round(Number(r.score||0))}%`)+(r.power_before!=null&&r.power_after!=null?`<div class="boss-power-result"><div><b>${Number(r.power_before).toFixed(0)}</b><small>قوة المهارة قبل</small></div><span class="boss-arrow">←</span><div><b>${Number(r.power_after).toFixed(0)}</b><small>بعد المواجهة</small></div></div>`:'');document.getElementById('rewardXp').textContent=`+${Number(r.reward_xp||0)} XP`;document.getElementById('rewardCoins').textContent=`+${Number(r.reward_coins||0)} 🪙`;const rc=document.getElementById('rewardChest');if(r.chest_type){rc.classList.remove('hidden');rc.textContent=`🎁 حصلت على صندوق ${chestAr(r.chest_type)} — افتحه من المتجر`}else rc.classList.add('hidden');ov.classList.add('show')}
 function closeReward(){document.getElementById('rewardOverlay').classList.remove('show');show(pendingRewardTarget||'map')}
 
 function itemCategoryAr(c){return ({avatar:'شخصية',frame:'إطار',title:'لقب'})[c]||c}
