@@ -942,12 +942,12 @@ function renderManagementAdaptive(){const rows=managementAdaptive||[],body=docum
 
 function clearMissionTimer(){if(missionTimerId){clearInterval(missionTimerId);missionTimerId=null}}
 function updateMissionHud(){
-  const boss=['boss','personal_boss'].includes(currentMission?.mission_kind),event=currentMission?.mission_kind==='world_event',special=boss||event,hud=document.getElementById('bossHud');hud.classList.toggle('hidden',!special);
+  const boss=['boss','personal_boss'].includes(currentMission?.mission_kind),event=currentMission?.mission_kind==='world_event',timed=Number(currentMission?.time_limit_seconds||0)>0,limitedLives=Number(currentMission?.lives||0)>0,special=boss||event||timed||limitedLives,hud=document.getElementById('bossHud');hud.classList.toggle('hidden',!special);
   document.getElementById('missionKindBadge').textContent=missionKindAr(currentMission?.mission_kind||'story');document.getElementById('missionKindBadge').className='type-badge '+(currentMission?.mission_kind||'story');
-  if(special){const ht=document.getElementById('bossHudTitle');if(ht)ht.textContent=event?(currentMission?.event_type==='portal'?'🌀 طاقة البوابة السرية':'⚡ تحدي الحدث المؤقت'):'👑 طاقة حارس القلعة';const hp=Math.max(0,Math.round(100-(score/Math.max(1,currentQuestions.length))*100));document.getElementById('bossHpBar').style.width=hp+'%';document.getElementById('bossHearts').textContent='❤️'.repeat(Math.max(0,missionLives))+'🖤'.repeat(Math.max(0,(currentMission.lives||0)-missionLives));document.getElementById('missionTimer').textContent=formatTime(missionSeconds)}
+  if(special){const ht=document.getElementById('bossHudTitle');if(ht)ht.textContent=currentMission?.code==='boss-final-02'?'👑 طاقة سيد المضمار':event?(currentMission?.event_type==='portal'?'🌀 طاقة البوابة السرية':'⚡ تحدي الحدث المؤقت'):boss?'👑 طاقة حارس القلعة':'⚡ تحدي النخبة';const hp=Math.max(0,Math.round(100-(score/Math.max(1,currentQuestions.length))*100));document.getElementById('bossHpBar').style.width=hp+'%';document.getElementById('bossHearts').textContent=limitedLives?'❤️'.repeat(Math.max(0,missionLives))+'🖤'.repeat(Math.max(0,(currentMission.lives||0)-missionLives)):'∞';document.getElementById('missionTimer').textContent=timed?formatTime(missionSeconds):'بدون وقت'}
 }
 function formatTime(sec){sec=Math.max(0,Number(sec||0));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
-function startMissionTimer(){clearMissionTimer();if(!['boss','personal_boss','world_event'].includes(currentMission?.mission_kind)||!missionSeconds)return;missionTimerId=setInterval(()=>{missionSeconds--;updateMissionHud();if(missionSeconds<=0){clearMissionTimer();failAttempt('انتهى الوقت')}} ,1000)}
+function startMissionTimer(){clearMissionTimer();if(!missionSeconds)return;missionTimerId=setInterval(()=>{missionSeconds--;updateMissionHud();if(missionSeconds<=0){clearMissionTimer();failAttempt('انتهى الوقت')}} ,1000)}
 async function startMissionById(id){
   const idx=route.findIndex(x=>String(x.id)===String(id));if(idx<0)return;const m=route[idx];if(!missionUnlocked(m)){toast('هذه المهمة ما زالت مغلقة.');return}
   currentMission=m;qIndex=0;score=0;answered=false;attemptId=null;clearMissionTimer();
@@ -967,10 +967,10 @@ async function useHint(){
 }
 async function choose(i){
   if(answered)return;answered=true;const q=currentQuestions[qIndex];let res;try{if(demo)res={is_correct:i===q.correct_index,correct_index:q.correct_index,explanation:q.explanation,xp_earned:i===q.correct_index?q.xp:0};else res=await api('rpc/submit_attempt_answer',{method:'POST',body:JSON.stringify({p_attempt_id:attemptId,p_question_id:q.id,p_selected_index:i,p_response_ms:Math.max(0,Date.now()-questionShownAt)})})}catch(e){answered=false;toast(e.message);return}
-  if(res.is_correct)score++;else if(['boss','personal_boss','world_event'].includes(currentMission?.mission_kind)&&Number(currentMission?.lives||0)>0)missionLives=Math.max(0,missionLives-1);
+  if(res.is_correct)score++;else if(Number(currentMission?.lives||0)>0)missionLives=Math.max(0,missionLives-1);
   document.querySelectorAll('.opt').forEach(b=>{const bi=Number(b.dataset.i);if(bi===Number(res.correct_index))b.classList.add('correct');else if(bi===i)b.classList.add('wrong');b.disabled=true});
   const f=document.getElementById('feedback');f.className='feedback show '+(res.is_correct?'good':'bad');f.innerHTML=`<strong>${res.is_correct?'✓ إجابة صحيحة':'✕ حاول فك الشفرة مرة أخرى'}</strong><div>${esc(res.explanation||'')}</div><small>استدل من العلاقة والمعنى والسياق.</small>`;document.getElementById('nextBtn').disabled=false;document.getElementById('hintBtn').disabled=true;document.getElementById('missionProgress').style.width=((qIndex+1)/currentQuestions.length*100)+'%';updateMissionHud();
-  if(['boss','personal_boss','world_event'].includes(currentMission?.mission_kind)&&Number(currentMission?.lives||0)>0&&missionLives<=0){document.getElementById('nextBtn').disabled=true;setTimeout(()=>failAttempt('نفدت القلوب'),700)}
+  if(Number(currentMission?.lives||0)>0&&missionLives<=0){document.getElementById('nextBtn').disabled=true;setTimeout(()=>failAttempt('نفدت القلوب'),700)}
 }
 async function nextQuestion(){
   if(qIndex<currentQuestions.length-1){qIndex++;renderQuestion();return}clearMissionTimer();
